@@ -1,0 +1,25 @@
+<div class="container justify-content-center p-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+        <h2 class="text-center fs-2">New Post</h2>
+        <form #form="ngForm" (ngSubmit)="onSubmit()" class="bg-body-secondary p-4 rounded shadow m-2">
+            <div class="form-group m-2">
+            <label for="code" class="form-label">Title</label>
+            <input type="text" name="title" formControlName="title" class="form-control" placeholder="Enter the title"/>
+            <!-- <div *ngIf="postForm.get('title')?.invalid && postForm.get('title')?.touched" class="text-danger">
+                Title is required.
+            </div> -->
+            </div>
+            <div class="form-group m-2">
+                <label for="content" class="form-label">Content</label>
+                <textarea name="content" formControlName="content" class="form-control" placeholder="Enter the content" rows="5"></textarea>
+                <!-- <div *ngIf="postForm.get('content')?.invalid && postForm.get('content')?.touched" class="text-danger">
+                 Content is required.
+                </div> -->
+            </div>
+            <button type="submit" [disabled]="form.invalid" class="btn btn-primary m-2">Add</button>
+        </form>
+        </div>
+    </div>
+</div>
+

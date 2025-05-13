@@ -1,0 +1,17 @@
+<div class="container justify-content-center p-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+        <h2 class="text-center fs-2">Login</h2>
+        <form [formGroup]="verifyForm" (ngSubmit)="onSubmit()" class="bg-body-secondary p-4 rounded shadow m-2">
+            <div class="form-group m-2">
+            <label for="code" class="form-label">Code</label>
+            <input type="text" name="code" formControlName="code" class="form-control" autocomplete="off" placeholder="Enter the code"/>
+            <div *ngIf="verifyForm.get('code')?.invalid && verifyForm.get('code')?.touched" class="text-danger">
+                Code is required.
+            </div>
+            </div>
+            <button type="submit" [disabled]="verifyForm.invalid" class="btn btn-primary m-2">Verify</button>
+        </form>
+        </div>
+    </div>
+</div>
