@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
             this.loadPosts()
           })
         }else{
-          alert("You are permitted to delete this post")
+          alert("You are not permitted to delete this post")
         }
       },
       error: () => {
