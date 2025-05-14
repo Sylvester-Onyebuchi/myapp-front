@@ -17,4 +17,8 @@ export class AppComponent {
     this.router.navigateByUrl('login');
     // Logic to log out the user
   }
+  shouldShowLogin(): boolean {
+  const url = this.router.url;
+  return !url.startsWith('/home') && !url.startsWith('/update') && !url.startsWith('/verify');
+}
 }

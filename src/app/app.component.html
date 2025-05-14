@@ -9,10 +9,10 @@
         <!-- <li class="nav-item">
           <a class="nav-link active  btn btn-warning btn-sm m-2" routerLink="home">Home</a>
         </li> -->
-        <li class="nav-item" *ngIf="router.url !== '/home'">
+        <li class="nav-item" *ngIf="shouldShowLogin()">
           <a class="nav-link btn btn-secondary btn-sm active m-2" routerLink="login">Login</a>
         </li>
-        <li class="nav-item" *ngIf="router.url !== '/home'">
+        <li class="nav-item" *ngIf="shouldShowLogin()">
           <a class="nav-link btn btn-success btn-sm active m-2" routerLink="register">Signup</a>
         </li>
         <li class="nav-item" *ngIf="router.url === '/home'">
@@ -21,7 +21,7 @@
 
     
       </ul>
-      <form class="d-flex" role="search">
+      <form class="d-flex" role="search" *ngIf="shouldShowLogin()">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
