@@ -19,6 +19,6 @@ export class AppComponent {
   }
   shouldShowLogin(): boolean {
   const url = this.router.url;
-  return !url.startsWith('/home') && !url.startsWith('/update') && !url.startsWith('/verify');
+  return !url.startsWith('/home') && !url.startsWith('/update') && !url.startsWith('/verify') && !url.startsWith('/addpost');
 }
 }
