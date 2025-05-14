@@ -20,8 +20,8 @@ export class PostService {
   getAllPost(): Observable<PostResponse>{
     return this.http.get<PostResponse>(`${this.API_URL}/api/allPosts`,{withCredentials:true})
   }
-  getPostById(id: any){
-    return this.http.get<PostDetails>(`${this.API_URL}/api/post/${id}`, {withCredentials: true});
+  getPostById(id: any): Observable<any>{
+    return this.http.get(`${this.API_URL}/api/post/${id}`, {withCredentials: true});
   }
   updatePost(id: any, data: PostDetails){
     return this.http.put<PostDetails>(`${this.API_URL}/api/update/${id}`, data, {withCredentials:true});
