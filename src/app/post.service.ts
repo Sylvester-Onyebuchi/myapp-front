@@ -1,39 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PostDetails } from './post-details';
-import { BehaviorSubject } from 'rxjs';
+import { PostDetails, PostResponse } from './post-details';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
+    private API_URL=   "https://node-app-tljn.onrender.com"
 
-  private postSubject = new BehaviorSubject<any>([])
-  post$ = this.postSubject.asObservable();
+  
 
   constructor(private http:HttpClient) { }
 
-  postData(data: {title: string, content: string}){
-    return this.http.post<any>('http://localhost:4000/api/addpost', data ,{withCredentials:true})
+  postData(data: PostDetails): Observable<PostDetails>{
+    return this.http.post<PostDetails>(`${this.API_URL}/api/addPost`, data ,{withCredentials:true})
   }
 
-  getAllPost(){
-    return this.http.get<any>('http://localhost:4000/api/allPosts', {withCredentials:true}).subscribe((res) => {
-      this.postSubject.next(res.posts);
-    });
+  getAllPost(): Observable<PostResponse>{
+    return this.http.get<PostResponse>(`${this.API_URL}/api/allPosts`,{withCredentials:true})
   }
-  getPostById(id: number){
-    return this.http.get<PostDetails>(`https://localhost:4000/api/post/${id}`);
+  getPostById(id: any){
+    return this.http.get<PostDetails>(`${this.API_URL}/api/post/${id}`, {withCredentials: true});
   }
-  updatePost(id: number, data: PostDetails){
-    return this.http.put<PostDetails>(`https://localhost:4000/api/post/${id}`, data);
+  updatePost(id: any, data: PostDetails){
+    return this.http.put<PostDetails>(`${this.API_URL}/api/update/${id}`, data, {withCredentials:true});
   }
-  deletePost(id: number){
-    return this.http.delete<PostDetails>(`https://localhost:4000/api/post/${id}`);
+  deletePost(id: any): Observable<any>{
+    return this.http.delete(`${this.API_URL}/api/delete/${id}`, {withCredentials:true});
   }
 
-  addPostTostate(post:any){
-    const currentPosts = this.postSubject.value;
-    this.postSubject.next([post,...currentPosts, ]);
-  }
+  
 }

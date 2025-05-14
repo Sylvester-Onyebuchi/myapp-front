@@ -1,10 +1,14 @@
 import id from "@angular/common/locales/id";
 
 export interface PostDetails {
-    id?: string | number;
-    title?: string;
-    content?: string;
-    postedBy?: {
-        name: string;
-    };
+    _id?:  any;
+    title: string;
+    content: string;
+    postedBy?:{firstName:string},
+    createdAt?: string;
+    
+}
+ export interface PostResponse {
+  message: string;
+  posts: PostDetails[];
 }

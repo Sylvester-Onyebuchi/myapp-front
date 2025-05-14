@@ -3,36 +3,39 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { PostService } from '../post.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { PostDetails } from '../post-details';
 
 @Component({
   selector: 'app-add-post',
-  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './add-post.component.html',
   styleUrl: './add-post.component.scss'
 })
 export class AddPostComponent {
- posts = {
-  title: '',
-  content: ''
- }
+  title = ''
+  content = ''
+posts: PostDetails[] = [];  // Declare this in your component
 
-  constructor(private post: PostService, private router: Router, private fb: FormBuilder){
+  constructor(private postService: PostService, private router: Router, private fb: FormBuilder){
    
   }
   onSubmit() {
-    this.post.postData(this.posts).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.post.addPostTostate(res.post);
-        this.posts = {
-          title: '',
-          content: ''
-        }
-        this.router.navigateByUrl('home');
+    let newPost: PostDetails ={
+      title: this.title,
+      content: this.content
+    }
+    this.postService.postData(newPost).subscribe({
+      next:(res) => {
+        alert("Post added")
+       this.router.navigateByUrl('home')
       },
       error: (err) => {
-        console.log(err);
+        alert("Error adding post")
       }
     })
   }
+
+ 
+
+  
 }

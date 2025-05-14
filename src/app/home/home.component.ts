@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../post.service';
-import { PostDetails } from '../post-details';
-import { Router } from '@angular/router';
+import { PostDetails, PostResponse } from '../post-details';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../user.service';
 
@@ -13,7 +13,11 @@ import { UserService } from '../user.service';
 })
 export class HomeComponent implements OnInit {
   apiData:PostDetails[] = [];
-  constructor(private postService: PostService, private router : Router, private userService:UserService){}
+  constructor(private postService: PostService,
+     private router : Router, 
+     private userService:UserService,
+     private route: ActivatedRoute
+    ){}
 
     user: any;
  
@@ -22,12 +26,16 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.userService.getUserInfo().subscribe(res => {
       this.user = res;
-      console.log(this.user);
-    }
-    );
+       this.loadPosts()
+    })
+
+
   
-    // this.postService.post$.subscribe(posts => this.apiData = posts);
-    // this.postService.getAllPost();
+  }
+
+  onUpdate(id: any){
+    this.router.navigate(['/update', id])
+    
   }
 
 
@@ -36,20 +44,28 @@ export class HomeComponent implements OnInit {
     // Logic to add a new post
   }
 
-  onLogout() {
-    this.userService.logout();
-    this.router.navigateByUrl('login');
-    // Logic to log out the user
+
+  loadPosts() {
+  this.postService.getAllPost().subscribe({
+    next : (data:PostResponse) => {
+      if(data && data.posts){
+        this.apiData = data.posts
+      }
+      console.log(this.apiData)
+    },
+    error: (err) => {
+      alert("Error Loading posts");
+    }
+  });
   }
 
-  onEdit(postId: number) {
-    this.router.navigate(['edit-post', postId]);
-    // Logic to edit the post with the given ID
+  
+
+  onDelete(postId: any) {
+    this.postService.deletePost(postId).subscribe(() => {
+      alert("Post deleted")
+      this.loadPosts()
+    });
   }
-  // onDelete(postId: number) {
-  //   this.postService.deletePost(postId).subscribe(() => {
-  //     this.getAllData();
-  //   });
-  // }
 
 }
