@@ -4,7 +4,7 @@ export interface PostDetails {
     _id?:  any;
     title: string;
     content: string;
-    postedBy?:{firstName:string},
+    postedBy?:{_id: any, firstName:string},
     createdAt?: string;
     
 }

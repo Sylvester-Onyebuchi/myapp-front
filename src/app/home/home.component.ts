@@ -13,6 +13,7 @@ import { UserService } from '../user.service';
 })
 export class HomeComponent implements OnInit {
   apiData:PostDetails[] = [];
+   currentUserId: any;
   constructor(private postService: PostService,
      private router : Router, 
      private userService:UserService,
@@ -33,10 +34,23 @@ export class HomeComponent implements OnInit {
   
   }
 
-  onUpdate(id: any){
-    this.router.navigate(['/update', id])
+  onUpdate(id: any, userId: any){
+    this.userService.getCurrentUserId().subscribe({
+        next: (user) => {
+          if(user._id === userId){
+            this.router.navigate(['update', id])
+          }else{
+            alert("You are not permiited to update this post")
+          }
+        },
+        error : () => {
+          alert("Not Allowed")
+        }
+
+    })
     
   }
+ 
 
 
   onAddPost() {
@@ -61,11 +75,22 @@ export class HomeComponent implements OnInit {
 
   
 
-  onDelete(postId: any) {
-    this.postService.deletePost(postId).subscribe(() => {
-      alert("Post deleted")
-      this.loadPosts()
-    });
+  onDelete(postId: any, userId: any) {
+    this.userService.getCurrentUserId().subscribe({
+      next: (user) => {
+        if(user._id.toString() === userId.toString()){
+          this.postService.deletePost(postId).subscribe(() => {
+            alert("Post deleted")
+            this.loadPosts()
+          })
+        }else{
+          alert("You are permitted to delete this post")
+        }
+      },
+      error: () => {
+         alert("Something went wrong. Please log in.");
+      }
+    })
   }
 
 }

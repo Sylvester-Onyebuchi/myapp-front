@@ -4,6 +4,7 @@ import { UserDatails } from './user-datails';
 
 import {CookieService} from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -30,6 +31,10 @@ export class UserService {
   }
   getUserInfo(){
     return this.http.get<{firstName:string}>('https://node-app-tljn.onrender.com/api/user-info', {withCredentials: true})
+  }
+
+  getCurrentUserId(): Observable<any> {
+    return this.http.get<any>('https://node-app-tljn.onrender.com/api/user', { withCredentials: true })
   }
 
 

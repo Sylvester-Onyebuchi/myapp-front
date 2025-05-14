@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { PostDetails, PostResponse } from '../post-details';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from '../post.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-update-post',
@@ -48,7 +49,7 @@ export class UpdatePostComponent implements OnInit {
         this.loadPosts
       },
       error: () => {
-        alert('Error updating post');
+        alert('You are not allowed to update this post');
       }
     });
   }

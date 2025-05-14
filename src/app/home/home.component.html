@@ -8,10 +8,11 @@
     <div class="card-body bg-body-secondary">
       <h5 class="card-title">{{ post.title }}</h5>
       <p class="card-text">{{ post.content}}</p>
+      <p class="card-text">{{ post.postedBy?._id}}</p>
       <p class="text-muted">Posted by: {{ post.postedBy?.firstName}}</p> 
        <p class="text-muted small">Posted on: {{ post.createdAt | date:'medium' }}</p>
-       <button class="btn btn-danger m-2" (click)="onDelete(post._id)">Delete</button>
-       <button class="btn btn-info m-2" (click)="onUpdate(post._id)">Update</button>
+       <button class="btn btn-danger m-2" (click)="onDelete(post._id, post.postedBy?._id)">Delete</button>
+       <button  class="btn btn-info m-2" (click)="onUpdate(post._id, post.postedBy?._id)">Update</button>
     </div>
   </div>
   <button class="btn btn-info btn-sm m-2" (click)="onAddPost()">Add Post</button>
