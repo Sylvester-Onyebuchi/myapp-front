@@ -27,17 +27,8 @@ export class UpdatePostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.postId = this.route.snapshot.params['id'];
-
-    this.postService.getPostById(this.postId).subscribe({
-      next: (data) => {
-        this.postData = data;
-      },
-      error: (err) => {
-        alert('Error loading post details');
-        console.error(err);
-      }
-    });
+    this.postId = this.route.snapshot.paramMap.get('id');
+    this.loadPost()
   }
 
   onSubmit() {
@@ -70,5 +61,18 @@ export class UpdatePostComponent implements OnInit {
   onCancel(){
     this.router.navigateByUrl('home')
     this.loadPosts()
+  }
+
+    loadPost() {
+    this.postService.getPostById(this.postId).subscribe({
+      next: (post) => {
+        this.postData.title = post.title;
+        this.postData.content = post.content;
+      },
+      error: (err) => {
+        alert("Failed to load post");
+        console.error(err);
+      }
+    });
   }
 }
